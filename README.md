@@ -70,19 +70,22 @@ Check cluster information:
 kubectl cluster-info --context kind-kind
 kubectl get nodes
 kind get clusters
+
 2. Installing kubectl
 Download kubectl for managing Kubernetes clusters:
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin
 kubectl version --short --client
-3. Managing Docker and Kubernetes Pods
+
+4. Managing Docker and Kubernetes Pods
 Check Docker containers running:
 
 docker ps
 List all Kubernetes pods in all namespaces:
 
 kubectl get pods -A
+
 4. Cloning and Running the Example Voting App
 Clone the voting app repository:
 
@@ -98,6 +101,7 @@ Forward local ports for accessing the voting and result apps:
 
 kubectl port-forward service/vote 5000:5000 --address=0.0.0.0 &
 kubectl port-forward service/result 5001:5001 --address=0.0.0.0 &
+
 5. Managing Files in Example Voting App
 Navigate and view files:
 cd ..
@@ -105,7 +109,8 @@ cd seed-data/
 ls
 cat Dockerfile
 cat generate-votes.sh
-6. Installing Argo CD
+
+7. Installing Argo CD
 Create a namespace for Argo CD:
 
 kubectl create namespace argocd
@@ -121,10 +126,12 @@ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
 Forward ports to access Argo CD server:
 
 kubectl port-forward -n argocd service/argocd-server 8443:443 &
+
 7. Deleting Kubernetes Cluster
 Delete the Kind cluster:
 kind delete cluster --name=kind
-8. Installing Kubernetes Dashboard
+
+9. Installing Kubernetes Dashboard
 Deploy Kubernetes dashboard:
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
@@ -134,6 +141,7 @@ kubectl -n kubernetes-dashboard create token admin-user
 9. Argo CD Initial Admin Password
 Retrieve Argo CD admin password:
 kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+
 10. Install HELM
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
